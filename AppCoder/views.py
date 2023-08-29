@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Curso, Profesor
 from django.http import HttpResponse
+from .forms import CursoForm
 # Create your views here.
 
 def crear_curso(request):
@@ -26,13 +27,16 @@ def profesores(request):
 
 def cursoformulario(request):
     if request.method=="POST":
-        nombre=request.POST["nombre"]
-        comision=request.POST["comision"]
-        curso=Curso(nombre=nombre, comision=comision)
+        form=CursoForm(request.POST)
+        if form.is_valid():
+            print(form)
+            exit()
+        curso=Curso(nombre=nombre,comision=comision)
         curso.save()
         return render(request,"AppCoder/cursoformulario.html", {"mensaje":"Curso Creado"})
     else:
-        return render(request,"AppCoder/cursoformulario.html")
+        formulario_curso=CursoForm()
+        return render(request,"AppCoder/cursoformulario.html", {"formulario":"formulario_curso"})
     
 
 def estudiantes(request):
