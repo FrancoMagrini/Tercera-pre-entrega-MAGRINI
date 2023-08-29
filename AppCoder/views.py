@@ -60,3 +60,6 @@ def estudiantes(request):
 
 def entregables(request):
     return render(request,"AppCoder/entregables.html")
+
+def busquedacomision(request):
+    return render(request,"AppCoder/busquedacomision.html")
