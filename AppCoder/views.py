@@ -26,17 +26,18 @@ def profesores(request):
     return render(request,"AppCoder/profesores.html", {"profes":profes})
 
 def cursoformulario(request):
-    if request.method=="POST":
-        form=CursoForm(request.POST)
+    if request.method == "POST":
+        form = CursoForm(request.POST)
         if form.is_valid():
-            print(form)
-            exit()
-        curso=Curso(nombre=nombre,comision=comision)
-        curso.save()
-        return render(request,"AppCoder/cursoformulario.html", {"mensaje":"Curso Creado"})
+            nombre = form.cleaned_data['nombre']  # Obtén el nombre desde el formulario
+            comision = form.cleaned_data['comision']  # Obtén la comisión desde el formulario
+            
+            curso = Curso(nombre=nombre, comision=comision)
+            curso.save()
+            return render(request, "AppCoder/cursoformulario.html", {"mensaje": "Curso Creado"})
     else:
-        formulario_curso=CursoForm()
-        return render(request,"AppCoder/cursoformulario.html", {"formulario":"formulario_curso"})
+        formulario_curso = CursoForm()
+        return render(request, "AppCoder/cursoformulario.html", {"formulario": formulario_curso})
     
 
 def estudiantes(request):

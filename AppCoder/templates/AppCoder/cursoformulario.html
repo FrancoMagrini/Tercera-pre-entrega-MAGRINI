@@ -8,10 +8,10 @@
     <h1>FORMULARIO</h1>
     
     <form action="{% url 'cursoformulario' %}" method="POST"> {% csrf_token %}
-        {{ fomulario.as_p }}
-
-        <input type="submit" value="GUARDAR CURSO">     
+        {{ formulario.as_p }}
     
+        <input type="submit" value="GUARDAR CURSO">     
+        
     </form>
 
     <h3>{{ mensaje }}</h3>
