@@ -1,0 +1,21 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}ESTA ES UN FORMULARIO DE CARGA DE CURSOS {% endblock %}
+
+{% block contenido_que_cambia %}
+    <h1>FORMULARIO</h1>
+    
+    <form action="{% url 'cursoformulario' %}" method="POST"> {% csrf_token %}
+
+        <input type="number" name="comision" id="comision" placeholder="INSERTE COMISION">
+        <input type="text" name="nombre" id="comision" placeholder="INSERTE NOMBRE">
+        
+
+        <input type="submit" value="GUARDAR CURSO">     
+    
+    </form>
+
+    <h3>{{ mensaje }}</h3>
+{% endblock %}

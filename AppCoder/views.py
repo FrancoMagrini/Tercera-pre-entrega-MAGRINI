@@ -24,6 +24,17 @@ def profesores(request):
     profes=Profesor.objects.all()
     return render(request,"AppCoder/profesores.html", {"profes":profes})
 
+def cursoformulario(request):
+    if request.method=="POST":
+        nombre=request.POST["nombre"]
+        comision=request.POST["comision"]
+        curso=Curso(nombre=nombre, comision=comision)
+        curso.save()
+        return render(request,"AppCoder/cursoformulario.html", {"mensaje":"Curso Creado"})
+    else:
+        return render(request,"AppCoder/cursoformulario.html")
+    
+
 def estudiantes(request):
     return render(request,"AppCoder/estudiantes.html")
 
