@@ -2,19 +2,17 @@
 
 {% load static %}
 
-{% block titulo %}ESTA ES LA PAGINA DE LOS CURSOS {% endblock %}
+{% block titulo %}ESTA ES UN FORMULARIO DE CARGA DE CURSOS {% endblock %}
 
 {% block contenido_que_cambia %}
-<h1>CURSOS</h1>
-<u1>
-    {% for curso in cursos %}
-        <li>{{ curso.nombre }} - {{curso.comision}}</li>
-    {% endfor %}
-
-</u1>
+    <h1>FORMULARIO</h1>
+    
+    <form action="{% url 'cursos' %}" method="POST"> {% csrf_token %}
+        {{ formulario.as_p }}
+    
+        <input type="submit" value="GUARDAR CURSO">     
+        
+    </form>
 
     <h3>{{ mensaje }}</h3>
 {% endblock %}
- 
-</body>
-</html>

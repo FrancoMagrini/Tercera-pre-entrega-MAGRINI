@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Curso, Profesor
 from django.http import HttpResponse
-from .forms import CursoForm
+from .forms import CursoForm, ProfesorForm
 # Create your views here.
 
 def crear_curso(request):
@@ -17,27 +17,42 @@ def crear_curso(request):
 def inicio(request):
     return render(request,"AppCoder/inicio.html")
 
-def cursos(request):
-    cursos= Curso.objects.all()
-    return render(request,"AppCoder/cursos.html", {"cursos":cursos})
-
 def profesores(request):
-    profes=Profesor.objects.all()
-    return render(request,"AppCoder/profesores.html", {"profes":profes})
+    if request.method=="POST":
+        form=ProfesorForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            nombre=info["nombre"]
+            apellido=info["apellido"]
+            email=info["email"]
+            profesion=info["profesion"]
+            profesor=Profesor(nombre=nombre,apellido=apellido,email=email,profesion=profesion)
+            profesor.save()
+            formulario_profesor=ProfesorForm()
+            return render(request, "AppCoder/profesores.html", {"mensaje": "Profesor Creado"}, {"formulario":formulario_profesor})
+        else:
+            return render(request, "AppCoder/profesores.html", {"mensaje": "Datos inválidos"})
+    else:
+    
+        formulario_profesor=ProfesorForm()
+  
+    return render(request,"AppCoder/profesores.html", {"formulario":formulario_profesor})
 
-def cursoformulario(request):
+def cursos(request):
     if request.method == "POST":
         form = CursoForm(request.POST)
         if form.is_valid():
-            nombre = form.cleaned_data['nombre']  # Obtén el nombre desde el formulario
-            comision = form.cleaned_data['comision']  # Obtén la comisión desde el formulario
+            info=form.cleaned_data
+            nombre =info['nombre']  # Obtén el nombre desde el formulario
+            comision = info['comision']  # Obtén la comisión desde el formulario
             
             curso = Curso(nombre=nombre, comision=comision)
             curso.save()
-            return render(request, "AppCoder/cursoformulario.html", {"mensaje": "Curso Creado"})
+            return render(request, "AppCoder/cursos.html", {"mensaje": "Curso Creado"})
+        return render(request, "AppCoder/cursos.html", {"mensaje": "Datos inválidos"})
     else:
         formulario_curso = CursoForm()
-        return render(request, "AppCoder/cursoformulario.html", {"formulario": formulario_curso})
+        return render(request, "AppCoder/cursos.html", {"formulario": formulario_curso})
     
 
 def estudiantes(request):
