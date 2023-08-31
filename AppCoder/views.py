@@ -1,65 +1,82 @@
 from django.shortcuts import render
-from .models import Curso, Profesor
+from .models import Usuarios, CanchaPadel, CanchaFutbol
 from django.http import HttpResponse
-from .forms import CursoForm, ProfesorForm
+from datetime import datetime
+from .forms import UsuarioForm, CanchaPadelForm, CanchaFutbolForm
 # Create your views here.
-
-def crear_curso(request):
-
-    nombre_curso="Programacion Basica"
-    comision_curso=999888
-    print("creando curso")
-    curso=Curso(nombre=nombre_curso,comision=comision_curso)
-    curso.save()
-    respuesta=f"Curso creado: {curso.nombre} - {curso.comision}"    
-    return HttpResponse(respuesta)
 
 def inicio(request):
     return render(request,"AppCoder/inicio.html")
 
-def profesores(request):
+def Usuarios(request):
     if request.method == "POST":
-        form = ProfesorForm(request.POST)
+        form = UsuarioForm(request.POST)
         if form.is_valid():
             info = form.cleaned_data
             nombre = info["nombre"]
             apellido = info["apellido"]
             email = info["email"]
-            profesion = info["profesion"]
-            profesor = Profesor(nombre=nombre, apellido=apellido, email=email, profesion=profesion)
-            profesor.save()
-            formulario_profesor = ProfesorForm()
-            return render(request, "AppCoder/profesores.html", {"mensaje": "Profesor Creado", "formulario": formulario_profesor})
+            telefono= info["telefono"]
+            usuario = usuario(nombre=nombre, apellido=apellido, email=email, telefonon=telefono)
+            usuario.save()
+            formulario_usuario = UsuarioForm()
+            return render(request, "AppCoder/usuarios.html", {"mensaje": "Usuario Inscripto", "formulario": formulario_usuario})
         else:
-            return render(request, "AppCoder/profesores.html", {"mensaje": "Datos inválidos"})
+            return render(request, "AppCoder/usuarios.html", {"mensaje": "Datos inválidos"})
     else:
 
-        formulario_profesor = ProfesorForm()
+        formulario_usuario = UsuarioForm()
 
-    return render(request, "AppCoder/profesores.html", {"formulario": formulario_profesor})
+    return render(request, "AppCoder/usuarios.html", {"formulario": formulario_usuario})
 
-def cursos(request):
+
+def CanchaPadel(request):
     if request.method == "POST":
-        form = CursoForm(request.POST)
+        form = CanchaPadelForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
-            nombre =info['nombre']  # Obtén el nombre desde el formulario
-            comision = info['comision']  # Obtén la comisión desde el formulario
-            
-            curso = Curso(nombre=nombre, comision=comision)
-            curso.save()
-            return render(request, "AppCoder/cursos.html", {"mensaje": "Curso Creado"})
-        return render(request, "AppCoder/cursos.html", {"mensaje": "Datos inválidos"})
+            nombre =info['nombre']  
+            apellido =info['apellido']  
+            fecha =info['fecha']
+            hora =info['hora'] 
+
+            CanchaPadel = CanchaPadel(nombre=nombre, apellido=apellido, fecha=fecha, hora=hora)
+            CanchaPadel.save()
+            return render(request, "AppCoder/CanchaPadel.html", {"mensaje": "Alquilaste tu cancha de Padel!"})
+        return render(request, "AppCoder/CanchaPadel.html", {"mensaje": "Datos inválidos"})
     else:
-        formulario_curso = CursoForm()
-        return render(request, "AppCoder/cursos.html", {"formulario": formulario_curso})
+        formulario_cancha_padel = CanchaPadelForm()
+        return render(request, "AppCoder/CanchaPadel.html", {"formulario": formulario_cancha_padel})
     
+def CanchaFutbol(request):
+    if request.method == "POST":
+        form = CanchaFutbolForm(request.POST)
+        if form.is_valid():
+            info=form.cleaned_data
+            nombre =info['nombre']  
+            apellido =info['apellido']   
+            fecha =info['fecha']
+            hora =info['hora'] 
 
-def estudiantes(request):
-    return render(request,"AppCoder/estudiantes.html")
+            CanchaFutbol = CanchaFutbol(nombre=nombre, apellido=apellido, fecha=fecha, hora=hora)
+            CanchaFutbol.save()
+            return render(request, "AppCoder/CanchaFutbol.html", {"mensaje": "Alquilaste tu cancha de Futbol!"})
+        return render(request, "AppCoder/CanchaFutbol.html", {"mensaje": "Datos inválidos"})
+    else:
+        formulario_cancha_futbol = CanchaFutbolForm()
+        return render(request, "AppCoder/CanchaFutbol.html", {"formulario": formulario_cancha_futbol})
+  
+def verificar_disponibilidad(request):
+    if request.method == 'POST':
+        fecha_busqueda = request.POST.get('fecha')
+        hora_busqueda = datetime.strptime(request.POST.get('hora'), "%H:%M").time()
 
-def entregables(request):
-    return render(request,"AppCoder/entregables.html")
+        estado_cancha = CanchaPadel.verificar_disponibilidad(fecha_busqueda, hora_busqueda)
+
+        return render(request, 'verificacion.html', {'estado_cancha': estado_cancha})
+
+    return render(request, 'buscar_disponibilidad.html')
+
 
 def busquedacomision(request):
     return render(request,"AppCoder/busquedacomision.html")

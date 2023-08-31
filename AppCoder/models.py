@@ -1,28 +1,35 @@
 from django.db import models
+from datetime import datetime
 
-# Create your models here.
-class Curso(models.Model):
-    nombre=models.CharField(max_length=50)
-    comision=models.IntegerField()
-    def __str__(self):
-        return f"{self.nombre} - {self.comision}"
-
-class Estudiante(models.Model):
-    nombre=models.CharField(max_length=50)
-    apellido=models.CharField(max_length=50)
-    email=models.EmailField()
-    def __str__(self):
-        return f"{self.nombre} {self.apellido}"
-
-class Profesor(models.Model):
+class Usuarios(models.Model):
     nombre= models.CharField(max_length=50)
     apellido= models.CharField(max_length=50)
     email= models.EmailField()
-    profesion= models.CharField(max_length=50)
+    telefono= models.IntegerField()
     def __str__(self):
         return f"{self.nombre} - {self.apellido}"
 
-class Entregable(models.Model):
+class CanchaPadel(models.Model):
     nombre= models.CharField(max_length=50)
-    fecha_entrega= models.DateField()
-    entregado= models.BooleanField()
+    apellido= models.CharField(max_length=50)
+    fecha= models.DateField()
+    hora= models.TimeField()
+    def __str__(self):
+        return f"{self.nombre} - {self.apellido} - {self.fecha} - {self.hora}"
+    
+    @classmethod
+    def verificar_disponibilidad(cls, fecha, hora):
+        reservas = cls.objects.filter(fecha=fecha, hora=hora)
+
+        if reservas.exists():
+            return "Cancha ocupada"
+        else:
+            return "Cancha libre"
+
+class CanchaFutbol(models.Model):
+    nombre= models.CharField(max_length=50)
+    apellido= models.CharField(max_length=50)
+    fecha= models.DateField()
+    hora= models.TimeField()
+    def __str__(self):
+        return f"{self.nombre} - {self.apellido} - {self.fecha} - {self.hora}"

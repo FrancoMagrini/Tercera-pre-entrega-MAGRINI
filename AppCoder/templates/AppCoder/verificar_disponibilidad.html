@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar Disponibilidad</title>
+</head>
+<body>
+    <h1>Buscar Disponibilidad de Cancha</h1>
+    <form method="post" action="{% url 'verificar_disponibilidad' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Verificar Disponibilidad</button>
+    </form>
+</body>
+</html>

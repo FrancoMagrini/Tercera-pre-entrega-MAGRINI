@@ -1,0 +1,18 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %} PADEL {% endblock %}
+
+{% block contenido_que_cambia %}
+    <h1>RESERVA TU CANCHA DE PADEL=</h1>
+    
+    <form action="{% url 'CanchaPadel' %}" method="POST"> {% csrf_token %}
+        {{ formulario.as_p }}
+    
+        <input type="submit" value="Confirmar cancha de Padel">     
+        
+    </form>
+
+    <h3>{{ mensaje }}</h3>
+{% endblock %}
