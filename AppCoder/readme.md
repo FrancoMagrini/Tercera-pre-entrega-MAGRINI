@@ -12,7 +12,7 @@
 
 + Desde RESERVAS FUTBOL Y RESERVAS PADEL, deberás colocar tu nombre y apellido la fecha y hora en la que quieras reservar tu cancha.
 
-+ Desde el panel administrativo usted podrá realizar todas las acciones que hace un usuario logueado y podrá manejar los datos de todos los modelos del proyecto, pudiendo chequear 
++ Desde el panel administrativo usted podrá realizar podrá manejar los datos de todos los modelos del proyecto, pudiendo chequear los usuarios inscriptos, como así también las reservas de cancha.
 
 # El proyecto cuenta con las siguientes rutas
 + usuarios_create
