@@ -8,10 +8,11 @@
     <h1>RESERVA TU CANCHA DE FUTBOL=</h1>
     
     <form action="{% url 'cancha_futbol_create' %}" method="POST"> {% csrf_token %}
-        {{ formulario.as_p }}
-    
-        <input type="submit" value="Confirmar cancha Futbol">     
-        
+        <input type="text" name="nombre" id="nombre" placeholder="INSERTE NOMBRE">
+        <input type="text" name="apellido" id="apellido" placeholder="INSERTE APELLIDO">
+        <input type="date" name="fecha" id="fecha" placeholder="INSERTE FECHA">
+        <input type="time" name="hora" id="hora" placeholder="INSERTE HORA">
+        <input type="submit" value="Confirmar cancha de Futbol">
     </form>
 
     <h3>{{ mensaje }}</h3>
