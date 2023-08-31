@@ -7,5 +7,6 @@ urlpatterns = [
     path('CanchaFutbol/', CanchaFutbol, name="CanchaFutbol"),
   #  path('busquedacomision/', busquedacomision, name="busquedacomision"),
   #  path('buscar/', buscar, name="buscar"),
-     path('verificar-disponibilidad/', verificar_disponibilidad, name='verificar_disponibilidad'),
+    path('verificar_disponibilidad/', verificar_disponibilidad, name='verificar_disponibilidad'),
+    
 ]

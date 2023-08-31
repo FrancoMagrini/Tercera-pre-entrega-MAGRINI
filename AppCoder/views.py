@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Usuarios, CanchaPadel, CanchaFutbol
 from django.http import HttpResponse
 from datetime import datetime
-from .forms import UsuarioForm, CanchaPadelForm, CanchaFutbolForm
+from .forms import UsuarioForm, CanchaPadelForm, CanchaFutbolForm, VerificacionForm
 # Create your views here.
 
 def inicio(request):
@@ -73,9 +73,9 @@ def verificar_disponibilidad(request):
 
         estado_cancha = CanchaPadel.verificar_disponibilidad(fecha_busqueda, hora_busqueda)
 
-        return render(request, 'verificacion.html', {'estado_cancha': estado_cancha})
+        return render(request, 'AppCoder/verificacion.html', {'estado_cancha': estado_cancha})
 
-    return render(request, 'buscar_disponibilidad.html')
+    return render(request, "AppCoder/buscar_disponibilidad.html")
 
 
 #def busquedacomision(request):
