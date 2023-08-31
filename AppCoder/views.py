@@ -17,7 +17,7 @@ def usuarios_create(request):
             apellido = info["apellido"]
             email = info["email"]
             telefono= info["telefono"]
-            usuario = usuario(nombre=nombre, apellido=apellido, email=email, telefonon=telefono)
+            usuario = Usuarios(nombre=nombre, apellido=apellido, email=email, telefono=telefono)
             usuario.save()
             formulario_usuario = UsuarioForm()
             return render(request, "AppCoder/usuarios.html", {"mensaje": "Usuario Inscripto", "formulario": formulario_usuario})
