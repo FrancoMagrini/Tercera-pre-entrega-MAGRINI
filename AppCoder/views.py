@@ -83,14 +83,3 @@ def verificar_disponibilidad(request):
 
     return render(request, "AppCoder/buscar_disponibilidad.html")
 
-
-#def busquedacomision(request):
-  #  return render(request,"AppCoder/busquedacomision.html")
-
-#def buscar(request):
-    #comision=request.GET["comision"]
-    #if comision!="":
-     #   cursos=Curso.objects.filter(comision__icontains=comision)
-       # return render(request,"AppCoder/resultadosBusqueda.html", {"cursos":cursos})
-    #else:
-      #  return render(request,"AppCoder/busquedaComision.html", {"mensaje":"che! no me ingresaste nada!!"})
