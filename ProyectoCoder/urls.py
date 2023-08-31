@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from AppCoder.views import inicio, Usuarios, CanchaPadel, CanchaFutbol, verificar_disponibilidad
+from AppCoder.views import inicio, usuarios_create, cancha_padel_create, cancha_futbol_create, verificar_disponibilidad
 
 urlpatterns = [
     path('admin/', admin.site.urls),

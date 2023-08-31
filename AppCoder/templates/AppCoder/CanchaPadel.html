@@ -7,11 +7,12 @@
 {% block contenido_que_cambia %}
     <h1>RESERVA TU CANCHA DE PADEL=</h1>
     
-    <form action="{% url 'CanchaPadel' %}" method="POST"> {% csrf_token %}
-        {{ formulario.as_p }}
-    
-        <input type="submit" value="Confirmar cancha de Padel">     
-        
+    <form action="{% url 'cancha_padel_create' %}" method="POST"> {% csrf_token %}
+        <input type="text" name="nombre" id="nombre" placeholder="INSERTE NOMBRE">
+        <input type="text" name="apellido" id="apellido" placeholder="INSERTE APELLIDO">
+        <input type="date" name="fecha" id="fecha" placeholder="INSERTE FECHA">
+        <input type="time" name="hora" id="hora" placeholder="INSERTE HORA">
+        <input type="submit" value="Confirmar cancha de Padel">
     </form>
 
     <h3>{{ mensaje }}</h3>

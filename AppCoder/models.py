@@ -17,14 +17,6 @@ class CanchaPadel(models.Model):
     def __str__(self):
         return f"{self.nombre} - {self.apellido} - {self.fecha} - {self.hora}"
     
-    @classmethod
-    def verificar_disponibilidad(cls, fecha, hora):
-        reservas = cls.objects.filter(fecha=fecha, hora=hora)
-
-        if reservas.exists():
-            return "Cancha ocupada"
-        else:
-            return "Cancha libre"
 
 class CanchaFutbol(models.Model):
     nombre= models.CharField(max_length=50)

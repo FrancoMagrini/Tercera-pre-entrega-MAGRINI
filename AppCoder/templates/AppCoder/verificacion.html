@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Resultado de Verificación</title>
-</head>
-<body>
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}RESULTADO DE LA VERIFICACION{% endblock %}
+
+{% block contenido_que_cambia %}
+
+
     <h1>Resultado de Verificación</h1>
     <p>{{ estado_cancha }}</p>
-    <a href="{% url 'verificar_disponibilidad' %}">Volver a buscar disponibilidad</a>
-</body>
-</html>
+    <a href="{% url 'verificar_disponibilidad' %}">Volver a buscar disponibilidad</a>   
+
+
+
+{% endblock %}
+

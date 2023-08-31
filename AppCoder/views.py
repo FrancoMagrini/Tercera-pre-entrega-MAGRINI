@@ -8,7 +8,7 @@ from .forms import UsuarioForm, CanchaPadelForm, CanchaFutbolForm, VerificacionF
 def inicio(request):
     return render(request,"AppCoder/inicio.html")
 
-def Usuarios(request):
+def usuarios_create(request):
     if request.method == "POST":
         form = UsuarioForm(request.POST)
         if form.is_valid():
@@ -30,25 +30,25 @@ def Usuarios(request):
     return render(request, "AppCoder/usuarios.html", {"formulario": formulario_usuario})
 
 
-def CanchaPadel(request):
+def cancha_padel_create(request):
     if request.method == "POST":
         form = CanchaPadelForm(request.POST)
         if form.is_valid():
             info=form.cleaned_data
-            nombre =info['nombre']  
-            apellido =info['apellido']  
+            nombre =info['nombre']
+            apellido =info['apellido']
             fecha =info['fecha']
-            hora =info['hora'] 
+            hora =info['hora']
 
-            CanchaPadel = CanchaPadel(nombre=nombre, apellido=apellido, fecha=fecha, hora=hora)
-            CanchaPadel.save()
+            cancha = CanchaPadel(nombre=nombre, apellido=apellido, fecha=fecha, hora=hora)
+            cancha.save()
             return render(request, "AppCoder/CanchaPadel.html", {"mensaje": "Alquilaste tu cancha de Padel!"})
         return render(request, "AppCoder/CanchaPadel.html", {"mensaje": "Datos inválidos"})
     else:
         formulario_cancha_padel = CanchaPadelForm()
         return render(request, "AppCoder/CanchaPadel.html", {"formulario": formulario_cancha_padel})
     
-def CanchaFutbol(request):
+def cancha_futbol_create(request):
     if request.method == "POST":
         form = CanchaFutbolForm(request.POST)
         if form.is_valid():
@@ -67,13 +67,19 @@ def CanchaFutbol(request):
         return render(request, "AppCoder/CanchaFutbol.html", {"formulario": formulario_cancha_futbol})
   
 def verificar_disponibilidad(request):
-    if request.method == 'POST':
-        fecha_busqueda = request.POST.get('fecha')
-        hora_busqueda = datetime.strptime(request.POST.get('hora'), "%H:%M").time()
+    fecha_busqueda = request.GET.get('datetime')
+    hora = request.GET.get('hora')
+    if fecha_busqueda and hora:
+        hora_busqueda = datetime.strptime(hora, "%H:%M").time()
+        reservas = CanchaPadel.objects.filter(fecha__icontains=fecha_busqueda, hora__icontains=hora_busqueda)
+        print(hora_busqueda)
+        if reservas.exists():
+            estado_cancha = "Cancha ocupada"
+            return render(request, 'AppCoder/verificacion.html', {'estado_cancha': estado_cancha})
+        else:
+            estado_cancha = "Cancha libre"
+            return render(request, 'AppCoder/verificacion.html', {'estado_cancha': estado_cancha})
 
-        estado_cancha = CanchaPadel.verificar_disponibilidad(fecha_busqueda, hora_busqueda)
-
-        return render(request, 'AppCoder/verificacion.html', {'estado_cancha': estado_cancha})
 
     return render(request, "AppCoder/buscar_disponibilidad.html")
 
