@@ -21,8 +21,8 @@
 + verificar_disponibilidad
     
 ## Superuser y Password
-Superuser: admin
-Password: admin
-email: admin@admin.com
-ruta: admin/
++ Superuser: admin
++ Password: admin
++ email: admin@admin.com
++ ruta: admin/
 
